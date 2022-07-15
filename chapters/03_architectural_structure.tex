@@ -1,0 +1,38 @@
+\chapter{Architecture}\label{chapter:}
+
+In this section, technical and non-technical details of Haaukins platform will be discussed. The platform has main components which are driven by requirements of creating virtual labs in seconds with an automated way.  The idea comes from a real life challenge, imagining a group of students who competes with each other to get a flag in CTF (Capture The Flag) style event. Distributing computers to have same environment among participants of an event, is not feasible and fast. Running the event over the commercialized platforms could be problematic due to limited access to the platform. Therefore, there is a need of automated, easy and highly accessible platform which can be managed entirely. Haaukins born with this information in mind, initially it had four main goals which are fully automated, transparent, highly accessible and realistic\cite{8820918}. 
+Fully automated, deployment of newly created exercises and assigning virtual labs are automated completely through continuous integration and deployment. It includes creating virtual networks for each participants and providing isolated set of exercises. 
+Transparent, each participant for an event running Haaukins platform, assigned to have isolated vulnerable environment. It prevents other participants to interact with other team, to abuse their learning process. 
+Highly accessible, the platform has buffering mechanism, it provides access to virtualized environment in seconds. In case of high load, it requires some processing time depending on size of an event. 
+Realistic, another significant main goal of Haaukins is providing scenarios in exercises which are as close as possible to real life scenarios. It is achievable with help of virtualization methods used in Haaukins. 
+
+On top of the main goals, there are some additional goals included as education institutions used the platform in their lectures. Briefly, additional goals include: 
+
+- Easy management of the platform
+
+- Clear and distinct explanation of exercises 
+
+The additional goals in mind, the platform management side is re-designed and built based on the feedback. 
+
+\subsection{Main terms}
+ 
+ The main components of Haaukins are; event, lab, challenge and management interface. Initially, management interface was only command line tool\footnote{A command-line interpreter or command-line processor uses a command-line interface (CLI) to receive commands from a user in the form of lines of text. (Taken from: https://en.wikipedia.org/wiki/Command-line_interface)}, which needs to be installed to the computer who would like to manage the platform. However, it requires additional step and maintenance from the user. In order to make the management of the platform simple and easier web interface has been developed.\footnote{https://github.com/aau-network-security/haaukins-webclient}. 
+ \subsubsection{Event}
+ Event has two meaning in Haaukins platform, firstly it has its original meaning, special gathering for important times, secondly an event  in technical meaning is to have multiple labs and teams. 
+ 
+ \subsubsection{Lab}
+ Lab is composed of virtualized Docker containers and virtual machines which includes vulnerable machines to hack and a virtual machine or virtual private network endpoint to access the machine. 
+ 
+ \subsubsection{Challenge}
+ A challenge consists of one or more virtual images ( container or virtual machines), they includes the vulnerable software to be hacked by participants. 
+ 
+ \subsubsection{Team}
+ A team is group of people or only a person who is participated the event by signing up. \newline
+ \newline
+ In general, an event can contain one or more labs, a lab can contain at least one or more challenges. The relationship between main components can be described by Figure 3.1
+ 
+ 
+ 
+ 
+ 
+ 
