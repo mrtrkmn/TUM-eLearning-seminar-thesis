@@ -26,13 +26,51 @@ The additional goals in mind, the platform management side is re-designed and bu
  \subsubsection{Challenge}
  A challenge consists of one or more virtual images ( container or virtual machines), they includes the vulnerable software to be hacked by participants. 
  
- \subsubsection{Team}
- A team is group of people or only a person who is participated the event by signing up. \newline
- \newline
- In general, an event can contain one or more labs, a lab can contain at least one or more challenges. The relationship between main components can be described by Figure 3.1
+ \subsubsection{Flag}
+ Flag is special secret string inserted into vulnerable application when building. Participants' goal is to reach hidden flags and submit them through web user interface shown in Figure 3.1 
  
  
+ \begin{figure}[htbp]
+\centerline{\includegraphics[scale=.4]{figures/flag-submission-modal.png}}
+\caption{Example flag submission modal in Haaukins platform}
+\label{fig}
+\end{figure}
+\newpage
+\subsection{Overview}
+ In general, an event can contain one or more labs, a lab can contain at least one or more challenges. Overview relation between different components can be observed by Figure 3.2
  
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=.5]{figures/relationship-diagram.png}}
+\caption{The relationship between different components in Haaukins platform}
+\label{fig}
+\end{figure}
  
- 
- 
+As shown in Figure 3.1, each lab consists of different challenges and a virtual machine for participants to use on browser. The virtual machine is generally Kali or Parrot, since they include wide range of cyber security tool. When a participant sign up the event, they automatically assign a lab which is completely isolated from other team's lab. All this automation does not require any extra step from the participant perspective. A challenge can be built up from one or more containers or with virtual machines directly. Since challenges can be deployed as containers, they are lightweight compared to virtual machines. It brings great flexibility and scaling when there is high number of participants. Although containerization is great to use, sometimes it is not possible to emulate scenarios where the vulnerability is related to Windows Operating System core functionality for instance "Buffer Overrun In RPC Interface Could Allow Code Execution"\footnote{https://docs.microsoft.com/en-us/security-updates/securitybulletins/2003/ms03-026}
+
+
+\subsubsection{Golang}
+
+Golang is a decent programming language developed by Google\footnote{https://en.wikipedia.org/wiki/Go_(programming_language)}. It provides built-in concurrency and fast processing capabilities. Haaukins platform is entirely written in Go programming language to benefit from built-in concurrency and huge community support. 
+Golang is commonly used in system level automation tasks by large communities, some well-known projects written in Go are, Kubernetes, Docker, Prometheus, Terraform and many more. 
+Due to its advantages compared to other languages, the platform is built entirely in Go language. 
+
+\subsubsection{Virtual Box}
+
+Virtual box is used as hypervisor to handle challenges on VM (Virtual Machine) and assigned VMs to the participants to the event. VMs are linked with Docker network interface to be able to attack vulnerable machines resides on same network. 
+\subsubsection{Docker}
+
+Main core part of Haaukins platform is Docker containerization technology, the platform automates process of managing docker containers. Docker is providing virtual networking by creating macvlan network\footnote{https://docs.docker.com/network/macvlan/} interfaces when used with virtual machine on browser mode. 
+In case of virtual private networking (VPN) mode, Docker bridge network\footnote{https://docs.docker.com/network/bridge/} is used and network packets controlled with network tools such as iptables.
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=.4]{figures/macvlan-arch.png}}
+\caption{Lab internals, macvlan connection }
+\label{fig}
+\end{figure}
+In Figure 3.2, how a team is connected isolated lab environment with macvlan networks is shown. All challenges and VM is connected to common macvlan network to reach vulnerable machines. Team/Participant is connected on browser to customized virtual machine which includes cyber security tools, for instance operating system Kali\footnote{https://www.kali.org} or Parrot\footnote{https://www.parrot.com/en} The connection between user and virtual machine on browser is done by open source Apache Guacamole project.
+
+\subsubsection{Apache Guacamole}\footnote{https://guacamole.apache.org}
+Apache Guacamole provides stable connection to a virtual machine through browser. It removes necessity of installing additional software to participants' computer when joining an event running on Haaukins platform. 
+\newpage 
+All the steps are automated with Go programming language and it enables users to have a custom set of challenges. Haaukins platform can manage as many events as possible, limited to server resources (CPU, Memory). Each event can include different sets of challenges to hack, at the end of hacking, participants will receive dynamically generated flag. It means although challenges are same the flags will be unique per participants, which is generally not supported by other platforms.
+
+
