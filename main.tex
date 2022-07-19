@@ -11,7 +11,7 @@
 \newcommand*{\getUniversity}{Technische Universität München}
 \newcommand*{\getFaculty}{Department of Informatics}
 \newcommand*{\getTitle}{ Virtualized Security Education Platform\newline as a Service }
-\newcommand*{\getTitleGer}{Titel der Abschlussarbeit}
+% \newcommand*{\getTitleGer}{Titel der Abschlussarbeit}
 \newcommand*{\getAuthor}{Ahmet Turkmen}
 \newcommand*{\getDoctype}{Master Seminar Thesis in Informatics}
 \newcommand*{\getSupervisor}{Dr.-Ing. Thomas Hüttl}
@@ -33,8 +33,8 @@
 \frontmatter{}
 
 \input{pages/title}
-\input{pages/disclaimer}
-\input{pages/acknowledgements} % TODO: if you don't have anyone to thank for or don't wish to publish it, comment this line out.
+% \input{pages/disclaimer}
+% \input{pages/acknowledgements} % TODO: if you don't have anyone to thank for or don't wish to publish it, comment this line out.
 \input{pages/abstract}
 \microtypesetup{protrusion=false}
 \tableofcontents{}
@@ -46,14 +46,15 @@
 % TODO: add more chapters here
 \input{chapters/02_related-work}
 \input{chapters/03_architectural_structure}
-\appendix{}
+\input{chapters/04_user_experience}
+% \appendix{}
 
 % TODO: appendix chapter
-\input{pages/appendix}
+% \input{pages/appendix}
 
 \microtypesetup{protrusion=false}
 \listoffigures{}
-\listoftables{}
+% \listoftables{}
 \microtypesetup{protrusion=true}
 \printglossaries
 \printbibliography{}

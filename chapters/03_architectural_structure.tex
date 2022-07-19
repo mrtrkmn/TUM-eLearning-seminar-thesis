@@ -70,7 +70,41 @@ In Figure 3.2, how a team is connected isolated lab environment with macvlan net
 
 \subsubsection{Apache Guacamole}\footnote{https://guacamole.apache.org}
 Apache Guacamole provides stable connection to a virtual machine through browser. It removes necessity of installing additional software to participants' computer when joining an event running on Haaukins platform. 
+\newpage
+All the steps are automated with Go programming language and it enables users to have a custom set of challenges. Haaukins platform can manage as many events as possible, limited to server resources (CPU, Memory). Each event can include different sets of challenges to hack, at the end of hacking, participants will receive dynamically generated flag. It means although challenges are same the flags will be unique per participants, which is generally not supported by other platforms. 
+
+\subsection{Challenges}
+
+Challenges in the platform is developed specifically for a course (e.g Network Security, Cryptography, Security Engineering) or company based training course to provide specialized learning experience. A challenge can be a docker container, a virtual machine or group of docker containers. Since challenges are created parallel to course syllabus, understanding conceptional topics becomes easy for participants. Therefore, the platform has been used at Aalborg University\footnote{https://www.en.aau.dk/education/master/cyber-security/},  Hogeschool Saxion\footnote{https://www.saxion.edu/programmes/bachelor/applied-computer-science} and Denmark Technical University (DTU)\footnote{https://www.compute.dtu.dk/english/continuing-education/master-of-cyber-security/study-program} in relative courses. 
+
+\subsubsection{Deployment of Challenges}
+
+Challenges, running in container(s), are deployed automatically to the platform in a micro service architecture approach. 
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=.6]{figures/challenge-deployment.png}}
+\caption{Challenge deployment architecture diagram }
+\label{fig}
+\end{figure}
 \newpage 
-All the steps are automated with Go programming language and it enables users to have a custom set of challenges. Haaukins platform can manage as many events as possible, limited to server resources (CPU, Memory). Each event can include different sets of challenges to hack, at the end of hacking, participants will receive dynamically generated flag. It means although challenges are same the flags will be unique per participants, which is generally not supported by other platforms.
+Figure 3.4 represents how a challenge is automatically deployed to the platform. The process does not include any human interaction after Step 1. 
+
+In Step 1, challenge creator should define all components of a challenge to be running, which includes codes, framework, programming language and if required more information. Once, they have been defined in a simple Dockerfile\footnote{https://docs.docker.com/engine/reference/builder/} and pushed a repository (on Gitlab/Github), all other steps are automatically completed.  It brings great opportunity for other institutions to contribute the platform. Any institution can create challenges based on their requirement and shipped to Haaukins platform in one manual step. Indeed, the collaboration, between the universities who use Haaukins platform, is adequately increased. They decided to create a cluster of point where Haaukins can be scaled and improved even more with innovative challenges. 
+
+In Step 2, Gitlab CI*\footnote{Continuous integration} builds and creates a Docker image\footnote{https://docs.docker.com/engine/reference/commandline/image/}, it provides a packed application which can run anywhere as long as Docker daemon exists. 
+
+In Step 3, the created image is saved to a some kind of database with all content of the application. In case existence, it automatically updates existing image. 
+In Step 4, a configuration file is pushed to a microservice which contains information about an exercise, for instance, image name, registry information, flag information and some metadata. 
+
+In Step 5, in case a challenge is requested to be included in an event, Haaukins can pull and run it as shown in the Figure 3.4
+
+In Step 6, an event organizer or instructor creates an event on administration page. 
+
+\subsection{Virtual Private Network Access}
+Extensive usage of the platform extended its target group with professional security engineers. Even though professional security engineers are in seek of bug bounty programs, they interested to play with the platform. Professionals do not like to play with a virtual machine on a browser with no internet connection. Instead, their preference is mostly to use their customised environment for real tough challenges exists on the platform. Therefore, Wireguard\footnote{https://www.wireguard.com} introduced to mitigate the problems of experienced users. It provides connectivity to challenges running on virtual network without using any virtual machine on browser. 
+
+Compared to other existing platforms, virtual private network solution is different in Haaukins platform thanks to resilient Wireguard implementation. The platform is communicating with Wireguard service, which runs independently from the platform, to create requested clients from the platform. 
+
+Additionally, VPN solution provides simultaneously access for a lab assigned to a team. A team up to four people can access and solve challenges at the same time. The default limit for a lab to be access at the same time is four.However, it is a configuration matter and can be adjusted according to need. 
 
 
